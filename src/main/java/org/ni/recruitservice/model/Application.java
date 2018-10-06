@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by nazmul on 10/6/2018.
  */
 @Entity
-@Table(name="APPLICATION")
+@Table(name="APPLICATION", uniqueConstraints=@UniqueConstraint(columnNames={"candidateEmail", "offer_id"}))
 public @Data class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

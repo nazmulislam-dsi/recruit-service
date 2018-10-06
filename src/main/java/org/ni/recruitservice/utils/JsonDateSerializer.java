@@ -22,7 +22,7 @@ public class JsonDateSerializer extends JsonSerializer<Date> {
     public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC"));
         String formattedDate = ldt.format(formatter);
         gen.writeString(formattedDate);

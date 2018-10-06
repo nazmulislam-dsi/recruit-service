@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by nazmul on 10/6/2018.
@@ -15,19 +15,16 @@ public @Data class Offer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable=false)
     private String title;
 
+    @Column(nullable=false)
     private Date startDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "offer")
-    private List<Application> applications;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "offer", fetch = FetchType.LAZY)
+    private Set<Application> applications;
 
     @Transient
     private Integer numberOfApplications;
 
-    @PostLoad
-    public void setNumberOfApplications() {
-        this.numberOfApplications = applications.size();
-    }
 }

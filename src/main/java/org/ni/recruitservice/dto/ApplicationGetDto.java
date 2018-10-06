@@ -9,6 +9,8 @@ import org.ni.recruitservice.enums.ApplicationStatus;
 public @Data
 class ApplicationGetDto {
 
+    private Long id;
+
     private String candidateEmail;
 
     private String resume;

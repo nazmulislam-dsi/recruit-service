@@ -23,5 +23,6 @@ class OfferGetDto {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     private Date startDate;
 
-    private Integer numberOfApplications;
+    private Integer numberOfApplications = 0;
+
 }

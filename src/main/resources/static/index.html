@@ -28,10 +28,11 @@
 
         baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
         var lastChar = baseUrl.substr(baseUrl.length - 1);
-        if(lastChar != "/"){
-            baseUrl = baseUrl + "/";
-        }
         var url = baseUrl + 'v2/api-docs';
+        if(lastChar != "/"){
+            url = baseUrl + '/v2/api-docs';
+        }
+
       window.swaggerUi = new SwaggerUi({
         url: url,
         dom_id: "swagger-ui-container",
