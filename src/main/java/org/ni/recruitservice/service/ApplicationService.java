@@ -8,5 +8,5 @@ import org.ni.recruitservice.model.Application;
  */
 public interface ApplicationService {
     Application saveOrUpdateApplication(Application offer);
-    Application saveOrUpdateApplication(ApplicationPostDto applicationPostDto, Long offerId) throws Exception;
+    Application saveOrUpdateApplication(ApplicationPostDto applicationPostDto, Long offerId);
 }

@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Api(value = "Offer Controller", tags = "Offer Controller", description = "Offer Mgnt APIs")
 @RestController
-@RequestMapping(path ="/offers")
+@RequestMapping(path = "/offers")
 public class OfferController {
 
     private OfferService offerService;
@@ -41,7 +41,7 @@ public class OfferController {
         this.applicationService = applicationService;
     }
 
-    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to get offer list.", notes = "This endpoint is called to get offer list.", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_GET_200),
@@ -49,21 +49,15 @@ public class OfferController {
             @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
     })
     public ResponseEntity getOfferList() {
-        try {
-            List<Offer> offerList = offerService.getAllOffers();
-            if (Commons.isEmpty(offerList)) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObjectList(offerList, OfferGetDto.class));
-            }
-        }catch (ApiException ex) {
-            return ResponseEntity.status(ex.getCode()).contentType(MediaType.APPLICATION_JSON).body(ex.getMessage());
-        }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body(ex.getMessage());
+        List<Offer> offerList = offerService.getAllOffers();
+        if (Commons.isEmpty(offerList)) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObjectList(offerList, OfferGetDto.class));
         }
     }
 
-    @GetMapping(path = "/{offerId}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/{offerId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to get a single offer.", notes = "This endpoint is called to get a single offer.", response = OfferGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_GET_200),
@@ -76,7 +70,7 @@ public class OfferController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).build();
     }
 
-    @PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_POST_201),
@@ -87,20 +81,12 @@ public class OfferController {
     public ResponseEntity postOffer(
             @ApiParam(value = "Offer Object") @RequestBody @Valid OfferPostDto offerPostDto
     ) {
-        try {
-            Offer offer = Commons.transformObject(offerPostDto,Offer.class);
-            offer = offerService.saveOrUpdateOffer(offer);
-            return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(offer,OfferGetDto.class));
-        }catch (ConstraintViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).build();
-        }catch (ApiException ex) {
-            return ResponseEntity.status(ex.getCode()).contentType(MediaType.APPLICATION_JSON).build();
-        }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).build();
-        }
+        Offer offer = Commons.transformObject(offerPostDto, Offer.class);
+        offer = offerService.saveOrUpdateOffer(offer);
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(offer, OfferGetDto.class));
     }
 
-    @PostMapping(path = "/{offerId}/applications", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/{offerId}/applications", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to add a application under a offer.", notes = "This endpoint is called to add a application under a offer.", response = ApplicationGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_POST_201),
@@ -113,19 +99,11 @@ public class OfferController {
             @ApiParam(value = "Offer Id") @PathVariable("offerId") Long offerId,
             @ApiParam(value = "Application Object") @RequestBody @Valid ApplicationPostDto applicationPostDto
     ) {
-        try{
-            Application application = applicationService.saveOrUpdateApplication(applicationPostDto,offerId);
-            return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(application,ApplicationGetDto.class));
-        }catch (ConstraintViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).build();
-        }catch (ApiException ex) {
-            return ResponseEntity.status(ex.getCode()).contentType(MediaType.APPLICATION_JSON).build();
-        }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).build();
-        }
+        Application application = applicationService.saveOrUpdateApplication(applicationPostDto, offerId);
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(application, ApplicationGetDto.class));
     }
 
-    @GetMapping(path = "/{offerId}/applications", produces = { MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(path = "/{offerId}/applications", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.APPLICATION_GET_200),
@@ -136,7 +114,7 @@ public class OfferController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).build();
     }
 
-    @GetMapping(path = "/{offerId}/applications/{applicationsId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(path = "/{offerId}/applications/{applicationsId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = ApplicationGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.APPLICATION_GET_200),

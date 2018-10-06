@@ -25,5 +25,5 @@ class OfferWithApplicationGetDto {
 
     private List<Application> applications;
 
-    private Integer numberOfApplications;
+    private Integer numberOfApplications = 0;
 }

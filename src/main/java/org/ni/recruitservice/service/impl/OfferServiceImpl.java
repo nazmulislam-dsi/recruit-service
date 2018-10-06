@@ -25,8 +25,13 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<Offer> getAllOffers() {
-        //return offerRepository.findAll();
-        return offerRepository.getAllOffers();
+        try {
+            //return offerRepository.getAllOffers();
+            return offerRepository.findAll();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override

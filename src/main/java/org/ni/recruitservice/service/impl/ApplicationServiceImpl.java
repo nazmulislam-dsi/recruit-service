@@ -26,16 +26,24 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Application saveOrUpdateApplication(Application application) {
-        return applicationRepository.save(application);
+        try {
+            return applicationRepository.save(application);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     @Override
-    public Application saveOrUpdateApplication(ApplicationPostDto applicationPostDto, Long offerId) throws Exception {
-        Offer offer = new Offer();
-        offer.setId(offerId);
-        Application application = Commons.transformObject(applicationPostDto,Application.class);
-        application.setOffer(offer);
-        return saveOrUpdateApplication(application);
+    public Application saveOrUpdateApplication(ApplicationPostDto applicationPostDto, Long offerId) {
+        try {
+            Offer offer = new Offer();
+            offer.setId(offerId);
+            Application application = Commons.transformObject(applicationPostDto, Application.class);
+            application.setOffer(offer);
+            return saveOrUpdateApplication(application);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
 }

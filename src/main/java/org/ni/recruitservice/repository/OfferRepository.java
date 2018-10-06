@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
+//   @Query("SELECT o, COUNT(a) as numberOfApplications FROM Offer o JOIN FETCH o.applications a GROUP BY o.title")
     @Query("SELECT o, COUNT(a) as numberOfApplications FROM Offer o JOIN o.applications a GROUP BY o.title")
     List<Offer> getAllOffers();
 }
