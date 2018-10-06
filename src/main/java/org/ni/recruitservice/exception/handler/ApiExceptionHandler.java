@@ -3,6 +3,7 @@ package org.ni.recruitservice.exception.handler;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.ni.recruitservice.exception.ApiException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         if(ex instanceof ApiException) {
             return ResponseEntity.status(((ApiException)ex).getCode()).contentType(MediaType.APPLICATION_JSON).build();
         } else if(ex instanceof  ConstraintViolationException) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).build();
+        }else if(ex instanceof DataIntegrityViolationException) {
             return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).build();
         }else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).build();

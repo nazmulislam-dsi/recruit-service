@@ -32,8 +32,8 @@ public class Offer {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     private Date startDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "offer", fetch = FetchType.LAZY)
-    private Set<Application> applications = new HashSet<>();
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "offer", fetch = FetchType.LAZY)
+    private Set<Application> applications = new HashSet<>();*/
 
     @Transient
     private Integer numberOfApplications = 0;

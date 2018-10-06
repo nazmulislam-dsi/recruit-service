@@ -1,6 +1,8 @@
 package org.ni.recruitservice.service.impl;
 
+import org.ni.recruitservice.dto.ApplicationPatchDto;
 import org.ni.recruitservice.dto.ApplicationPostDto;
+import org.ni.recruitservice.enums.ApplicationStatus;
 import org.ni.recruitservice.model.Application;
 import org.ni.recruitservice.model.Offer;
 import org.ni.recruitservice.repository.ApplicationRepository;
@@ -67,6 +69,25 @@ public class ApplicationServiceImpl implements ApplicationService {
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    @Override
+    public Application updateApplicationByApplicationId(Long applicationId, ApplicationPatchDto applicationPatchDto) {
+        Application application = applicationRepository.findFirstById(applicationId);
+        boolean changed = true;
+        if(!Commons.isEmpty(applicationPatchDto.getResume())){
+            application.setResume(applicationPatchDto.getResume());
+            changed = true;
+        }
+        if(!applicationPatchDto.getApplicationStatus().equals(application.getApplicationStatus())) {
+            application.setApplicationStatus(applicationPatchDto.getApplicationStatus());
+            changed = true;
+        }
+        if(changed) {
+            application = applicationRepository.save(application);
+            application.getApplicationStatus().getNotificationService().sendNotification(application);
+        }
+        return application;
     }
 
 }

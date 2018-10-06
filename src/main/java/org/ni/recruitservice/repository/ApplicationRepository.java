@@ -14,5 +14,5 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     List<Application> findApplicationByOffer(Offer offer);
     Application findFirstByOfferAndId(Offer offer, Long applicationId);
-
+    Application findFirstById(Long applicationId);
 }

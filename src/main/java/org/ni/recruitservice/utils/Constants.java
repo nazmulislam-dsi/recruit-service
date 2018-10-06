@@ -15,5 +15,6 @@ public class Constants {
     public static final String APPLICATION_GET_204 = "No offer or application found.";
     public static final String APPLICATION_POST_400 = "Application JSON is invalid.";
     public static final String APPLICATION_POST_409 = "Application email is exist.";
+    public static final String APPLICATION_PATCH_200 = "Update application successfully.";
 
 }

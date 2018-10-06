@@ -18,7 +18,7 @@ import java.util.*;
 public class Commons {
     private static Logger log = LoggerFactory.getLogger(Commons.class);
 
-    private static InputStream propIS = null;
+    /*private static InputStream propIS = null;
     private static Properties props = new Properties();
 
     static{
@@ -29,7 +29,7 @@ public class Commons {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static boolean isEmpty(List list) {
         if (list == null) {
@@ -57,7 +57,7 @@ public class Commons {
         return false;
     }
 
-    public static boolean isEmpty(Map map) {
+    /*public static boolean isEmpty(Map map) {
         if (map == null) {
 
             return true;
@@ -77,7 +77,7 @@ public class Commons {
         }
         BeanUtils.copyProperties(source, target);
         return target;
-    }
+    }*/
 
     public static <S,T> T transformObject(S source, Class<T> targetClass) throws ApiException {
         try {

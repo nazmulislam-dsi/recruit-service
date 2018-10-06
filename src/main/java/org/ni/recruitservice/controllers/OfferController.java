@@ -2,10 +2,7 @@ package org.ni.recruitservice.controllers;
 
 import io.swagger.annotations.*;
 import org.hibernate.exception.ConstraintViolationException;
-import org.ni.recruitservice.dto.ApplicationGetDto;
-import org.ni.recruitservice.dto.ApplicationPostDto;
-import org.ni.recruitservice.dto.OfferGetDto;
-import org.ni.recruitservice.dto.OfferPostDto;
+import org.ni.recruitservice.dto.*;
 import org.ni.recruitservice.exception.ApiException;
 import org.ni.recruitservice.exception.BadRequestException;
 import org.ni.recruitservice.model.Application;
@@ -58,7 +55,7 @@ public class OfferController {
     }
 
     @GetMapping(path = "/{offerId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(position = 1, value = "This endpoint is called to get a single offer.", notes = "This endpoint is called to get a single offer.", response = OfferGetDto.class)
+    @ApiOperation(position = 1, value = "This endpoint is called to get a single offer.", notes = "This endpoint is called to get a single offer.", response = OfferWithCountGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_GET_200),
             @ApiResponse(code = 204, message = Constants.OFFER_GET_204),
@@ -68,10 +65,14 @@ public class OfferController {
             @ApiParam(value = "Offer Id") @PathVariable("offerId") Long offerId
     ) {
         Offer offer = offerService.getOfferByOfferId(offerId);
+        List<Application> applicationList = applicationService.getApplicationListByOfferId(offerId);
+        if(!Commons.isEmpty(applicationList)){
+            offer.setNumberOfApplications(applicationList.size());
+        }
         if (offer==null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
         } else {
-            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(offer, OfferGetDto.class));
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(offer, OfferWithCountGetDto.class));
         }
     }
 
@@ -127,7 +128,7 @@ public class OfferController {
     }
 
     @GetMapping(path = "/{offerId}/applications/{applicationId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = ApplicationGetDto.class)
+    @ApiOperation(position = 1, value = "This endpoint is called to get a application a offer.", notes = "This endpoint is called to get a application a offer.", response = ApplicationGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.APPLICATION_GET_200),
             @ApiResponse(code = 204, message = Constants.APPLICATION_GET_204),
@@ -142,6 +143,26 @@ public class OfferController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
         } else {
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(application, ApplicationGetDto.class));
+        }
+    }
+
+    @PatchMapping(path = "/applications/{applicationId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(position = 1, value = "This endpoint is called to update a application.", notes = "This endpoint is called to update a application.", response = ApplicationGetDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 202, message = Constants.APPLICATION_PATCH_200),
+            @ApiResponse(code = 204, message = Constants.APPLICATION_GET_204),
+            @ApiResponse(code = 400, message = Constants.APPLICATION_POST_400),
+            @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
+    })
+    public ResponseEntity patchAnApplication(
+            @ApiParam(value = "Application Id") @PathVariable("applicationId") Long applicationId,
+            @ApiParam(value = "Application Object") @RequestBody ApplicationPatchDto applicationPatchDto
+    ) {
+        Application application = applicationService.updateApplicationByApplicationId(applicationId,applicationPatchDto);
+        if (application==null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(application, ApplicationGetDto.class));
         }
     }
 
