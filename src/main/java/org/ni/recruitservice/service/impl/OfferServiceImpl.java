@@ -38,4 +38,9 @@ public class OfferServiceImpl implements OfferService {
     public Offer saveOrUpdateOffer(Offer offer) {
         return offerRepository.save(offer);
     }
+
+    @Override
+    public Offer getOfferByOfferId(Long offerId) {
+        return offerRepository.findFirstById(offerId);
+    }
 }

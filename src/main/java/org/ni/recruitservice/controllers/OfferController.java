@@ -57,7 +57,7 @@ public class OfferController {
         }
     }
 
-    @GetMapping(path = "/{offerId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/{offerId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to get a single offer.", notes = "This endpoint is called to get a single offer.", response = OfferGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_GET_200),
@@ -67,7 +67,12 @@ public class OfferController {
     public ResponseEntity getOffer(
             @ApiParam(value = "Offer Id") @PathVariable("offerId") Long offerId
     ) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).build();
+        Offer offer = offerService.getOfferByOfferId(offerId);
+        if (offer==null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(offer, OfferGetDto.class));
+        }
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -104,25 +109,40 @@ public class OfferController {
     }
 
     @GetMapping(path = "/{offerId}/applications", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = List.class)
+    @ApiOperation(position = 1, value = "This endpoint is called to get application list a offer.", notes = "This endpoint is called to get application list  a offer.", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.APPLICATION_GET_200),
             @ApiResponse(code = 204, message = Constants.APPLICATION_GET_204),
             @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity getApplicationListForAOffer() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).build();
+    public ResponseEntity getApplicationListForAOffer(
+            @ApiParam(value = "Offer Id") @PathVariable("offerId") Long offerId
+    ) {
+        List<Application> applicationList = applicationService.getApplicationListByOfferId(offerId);
+        if (Commons.isEmpty(applicationList)) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObjectList(applicationList, ApplicationGetDto.class));
+        }
     }
 
-    @GetMapping(path = "/{offerId}/applications/{applicationsId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/{offerId}/applications/{applicationId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(position = 1, value = "This endpoint is called to add a offer.", notes = "This endpoint is called to add a offer.", response = ApplicationGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.APPLICATION_GET_200),
             @ApiResponse(code = 204, message = Constants.APPLICATION_GET_204),
             @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity getAnApplicationForAOffer() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).build();
+    public ResponseEntity getAnApplicationForAOffer(
+            @ApiParam(value = "Offer Id") @PathVariable("offerId") Long offerId,
+            @ApiParam(value = "Application Id") @PathVariable("applicationId") Long applicationId
+    ) {
+        Application application = applicationService.getApplicationListByApplicationIdAndOfferId(offerId,applicationId);
+        if (application==null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Commons.transformObject(application, ApplicationGetDto.class));
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by nazmul on 10/6/2018.
@@ -41,6 +42,28 @@ public class ApplicationServiceImpl implements ApplicationService {
             Application application = Commons.transformObject(applicationPostDto, Application.class);
             application.setOffer(offer);
             return saveOrUpdateApplication(application);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Override
+    public List<Application> getApplicationListByOfferId(Long offerId) {
+        try {
+            Offer offer = new Offer();
+            offer.setId(offerId);
+            return applicationRepository.findApplicationByOffer(offer);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Override
+    public Application getApplicationListByApplicationIdAndOfferId(Long offerId, Long applicationId) {
+        try {
+            Offer offer = new Offer();
+            offer.setId(offerId);
+            return applicationRepository.findFirstByOfferAndId(offer,applicationId);
         } catch (Exception ex) {
             throw ex;
         }
