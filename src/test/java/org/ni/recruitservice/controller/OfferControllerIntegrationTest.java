@@ -158,8 +158,7 @@ public class OfferControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Commons.objectToJsonString(application))
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(status().isBadRequest());
 
         mvc.perform(post("/offers").param("offerId",offerGetDto.getId()+"")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -232,8 +231,6 @@ public class OfferControllerIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn();
-        String content2 = result2.getResponse().getContentAsString();
-        OfferGetDto offerGetDto = Commons.getObjectFromJsonString(content2,OfferGetDto.class);
         ApplicationPostDto application = new ApplicationPostDto();
         application.setApplicationStatus(ApplicationStatus.APPLIED);
         application.setCandidateEmail("naim.5221@gmail.com");
