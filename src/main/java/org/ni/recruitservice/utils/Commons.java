@@ -85,7 +85,10 @@ public class Commons {
         }
     }
 
-
+    public static <T> T getObjectFromJsonString(String jsonStr, Class<T> targetClass) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(jsonStr, targetClass);
+    }
 
     public static String objectToJsonString(Object object) throws Exception{
         if(null == object ){
@@ -93,5 +96,13 @@ public class Commons {
         }
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
+    }
+
+    public static List getObjectMapperList(String clientResponseStr,  Class clz) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(
+                clientResponseStr,
+                objectMapper.getTypeFactory().constructCollectionType(
+                        List.class, clz));
     }
 }

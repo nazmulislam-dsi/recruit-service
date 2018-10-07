@@ -96,7 +96,6 @@ public class OfferController {
     @ApiOperation(position = 1, value = "This endpoint is called to add a application under a offer.", notes = "This endpoint is called to add a application under a offer.", response = ApplicationGetDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = Constants.OFFER_POST_201),
-            @ApiResponse(code = 400, message = Constants.OFFER_POST_400),
             @ApiResponse(code = 400, message = Constants.APPLICATION_POST_400),
             @ApiResponse(code = 409, message = Constants.APPLICATION_POST_409),
             @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
