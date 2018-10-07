@@ -235,7 +235,7 @@ public class OfferControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn();
         String content3 = result3.getResponse().getContentAsString();
-        List<OfferGetDto> offerGetDtoList = Commons.getObjectMapperList(content,OfferGetDto.class);
+        List<OfferGetDto> offerGetDtoList = Commons.getObjectMapperList(content3,OfferGetDto.class);
         Assert.assertEquals(2,offerGetDtoList.size());
 
     }
