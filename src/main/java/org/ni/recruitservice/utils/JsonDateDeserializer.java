@@ -26,7 +26,6 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
     @Override
     public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             String date = jsonParser.getText();
             LocalDate ld = LocalDate.parse(date, formatter);

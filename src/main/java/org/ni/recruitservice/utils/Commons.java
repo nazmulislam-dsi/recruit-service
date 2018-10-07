@@ -1,5 +1,6 @@
 package org.ni.recruitservice.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ni.recruitservice.exception.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,28 +58,6 @@ public class Commons {
         return false;
     }
 
-    /*public static boolean isEmpty(Map map) {
-        if (map == null) {
-
-            return true;
-        }
-        if (map.isEmpty()) {
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public static <S,T> T transformObject(S source, T target) {
-
-        if(source == null) {
-            return null;
-        }
-        BeanUtils.copyProperties(source, target);
-        return target;
-    }*/
-
     public static <S,T> T transformObject(S source, Class<T> targetClass) throws ApiException {
         try {
             if (source == null) {
@@ -104,5 +83,15 @@ public class Commons {
         }catch (Exception ex){
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex);
         }
+    }
+
+
+
+    public static String objectToJsonString(Object object) throws Exception{
+        if(null == object ){
+            return "";
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
     }
 }

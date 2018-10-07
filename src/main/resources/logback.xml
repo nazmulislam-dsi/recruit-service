@@ -29,7 +29,7 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="SIZE_AND_TIME_BASED_FILE" />
     </logger>
-    <logger name="org.hibernate" level="DEBUG">
+    <logger name="org.hibernate" level="ERROR">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="SIZE_AND_TIME_BASED_FILE" />
     </logger>

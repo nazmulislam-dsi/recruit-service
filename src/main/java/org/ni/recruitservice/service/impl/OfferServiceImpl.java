@@ -26,7 +26,6 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<Offer> getAllOffers() {
         try {
-            //return offerRepository.getAllOffers();
             return offerRepository.findAll();
         }catch(Exception ex){
             ex.printStackTrace();
