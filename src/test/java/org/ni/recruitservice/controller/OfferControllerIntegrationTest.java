@@ -223,7 +223,7 @@ public class OfferControllerIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn();
         String content = result.getResponse().getContentAsString();
         OfferPostDto offerPostDto2 = new OfferPostDto();
-        offerPostDto2.setTitle("Test");
+        offerPostDto2.setTitle("Test2");
         offerPostDto2.setStartDate(new Date());
         MvcResult result2 = mvc.perform(post("/offers")
                 .contentType(MediaType.APPLICATION_JSON)
