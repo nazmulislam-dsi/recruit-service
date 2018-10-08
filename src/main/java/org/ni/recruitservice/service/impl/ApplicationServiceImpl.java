@@ -27,6 +27,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         this.applicationRepository = applicationRepository;
     }
 
+    /**
+     * Save or update Application
+     *
+     * @param application
+     * @return
+     */
     @Override
     public Application saveOrUpdateApplication(Application application) {
         try {
@@ -36,6 +42,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
+    /**
+     * Save or update Application
+     *
+     * @param applicationPostDto
+     * @param offerId
+     * @return
+     */
     @Override
     public Application saveOrUpdateApplication(ApplicationPostDto applicationPostDto, Long offerId) {
         try {
@@ -49,6 +62,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
+    /**
+     * Get application list with offerId
+     *
+     * @param offerId
+     * @return
+     */
     @Override
     public List<Application> getApplicationListByOfferId(Long offerId) {
         try {
@@ -60,6 +79,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
+    /**
+     * Get single application with applicationId and offerId
+     *
+     * @param offerId
+     * @param applicationId
+     * @return
+     */
     @Override
     public Application getApplicationListByApplicationIdAndOfferId(Long offerId, Long applicationId) {
         try {
@@ -71,6 +97,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
+    /**
+     * Update application atatus and send notification, for different type of status update it wil call different implementation of NotificationService
+     *
+     * @param applicationId
+     * @param applicationPatchDto
+     * @return
+     */
     @Override
     public Application updateApplicationByApplicationId(Long applicationId, ApplicationPatchDto applicationPatchDto) {
         Application application = applicationRepository.findFirstById(applicationId);

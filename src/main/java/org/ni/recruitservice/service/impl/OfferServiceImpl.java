@@ -23,6 +23,11 @@ public class OfferServiceImpl implements OfferService {
         this.offerRepository = offerRepository;
     }
 
+    /**
+     * Get all offer from database
+     *
+     * @return
+     */
     @Override
     public List<Offer> getAllOffers() {
         try {
@@ -33,11 +38,23 @@ public class OfferServiceImpl implements OfferService {
         return null;
     }
 
+    /**
+     * Save or update any offer
+     *
+     * @param offer
+     * @return
+     */
     @Override
     public Offer saveOrUpdateOffer(Offer offer) {
         return offerRepository.save(offer);
     }
 
+    /**
+     * Get offer from offerId
+     *
+     * @param offerId
+     * @return
+     */
     @Override
     public Offer getOfferByOfferId(Long offerId) {
         return offerRepository.findFirstById(offerId);

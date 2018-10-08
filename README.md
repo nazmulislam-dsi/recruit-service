@@ -24,7 +24,7 @@
 
 ## Coding Design
 
-* According to requirements, this service is pretty straightforward with some CRUD API for job offers and applications. On top of spring-boot 2.0, JpaRepository is being used to achieve the requirements. 
+* According to requirements, this service is pretty straightforward with some CRUD API for job offers and applications. On top of Spring Boot 2.0, JpaRepository is being used to achieve the requirements. 
 * To trigger completely different notification for different status, here **strategy pattern** is being used with different **singleton implementation**.
 
 
@@ -99,7 +99,7 @@ http://localhost:8080/
 ```
 
 ## Constraints 
-* To get the count of the Applications per Offer, we are querying 2 times. Need to fetch both info at once.
+* To get the count of the Applications per Offer, we are running queries 2 times. Need to fetch both info at once.
 * While creating swagger definition, an exception is occurring, though it is not creating any problem and it might be a library issue.
 * In place of 204/400/409 for some of the request from patch API it is returning 500.
 
