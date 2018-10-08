@@ -102,6 +102,8 @@ public class Commons {
 
     public static List getObjectMapperList(String clientResponseStr,  Class clz) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        objectMapper.setDateFormat(simpleDateFormat);
         return objectMapper.readValue(
                 clientResponseStr,
                 objectMapper.getTypeFactory().constructCollectionType(

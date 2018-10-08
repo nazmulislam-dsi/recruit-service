@@ -101,6 +101,7 @@ http://localhost:8080/
 ## Constraints 
 * To get the count of the Applications per Offer, we are querying 2 times. Need to fetch both info at once.
 * While creating swagger definition, an exception is occurring, though it is not creating any problem and it might be a library issue.
+* In place of 204/400/409 for some of the request from patch API it is returning 500.
 
 ## Documentation
 You can use SwaggerUI or Postman to call the exposed APIs.
